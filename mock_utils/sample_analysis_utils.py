@@ -58,6 +58,17 @@ def xyz_to_xi(x_subset, y_subset, z_subset):
     
     return bin_centers, xi, xi_Landy_Szalay
 
+# adds gaussian noise to 
+def add_gaussian_noise(ra, dec, redshift, sigma_ra, sigma_dec, sigma_z):
+    
+    # For now, assume that there's a constant redshift-independent ra, dec, and z noise
+    ra_noisy, dec_noisy, redshift_noisy = np.zeros(len(ra)), np.zeros(len(dec)), np.zeros(len(redshift))
+    for i in range(len(ra)):
+        ra_noisy[i] = np.random.default_rng().normal(ra[i], sigma_ra)
+        dec_noisy[i] = np.random.default_rng().normal(dec[i], sigma_dec)
+        redshift_noisy[i] = np.random.default_rng().normal(redshift[i], sigma_z)
+
+    return ra_noisy, dec_noisy, redshift_noisy
 
 # Define the comoving distance integral
 def integrand(z):
